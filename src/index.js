@@ -1,0 +1,172 @@
+import './style.scss';
+import { render, useState } from '@wordpress/element';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import apiFetch from '@wordpress/api-fetch';
+
+const OrderTrackerBuilder = () => {
+    const allWooStatuses = window.ostData?.allStatuses || [];
+    const savedOrder = window.ostData?.savedOrder || [];
+
+    // Initialize Active Steps
+    const [steps, setSteps] = useState(savedOrder.length > 0 ? savedOrder : allWooStatuses);
+    
+    // Initialize Deleted/Inactive Steps
+    const [deletedSteps, setDeletedSteps] = useState(() => {
+        if (savedOrder.length > 0) {
+            const savedIds = savedOrder.map(s => s.id);
+            return allWooStatuses.filter(status => !savedIds.includes(status.id));
+        }
+        return [];
+    });
+    
+    const [editingId, setEditingId] = useState(null);
+
+    const saveSettings = () => {
+        apiFetch({
+            path: '/ost/v1/save-settings',
+            method: 'POST',
+            data: { steps: steps },
+        }).then(() => alert('SETTINGS SAVED SUCCESSFULLY!'));
+    };
+
+    const resetToDefaults = () => {
+        if (window.confirm('RESET TO WOOCOMMERCE DEFAULTS?')) {
+            setSteps(allWooStatuses);
+            setDeletedSteps([]);
+            apiFetch({ path: '/ost/v1/save-settings', method: 'POST', data: { steps: allWooStatuses } });
+        }
+    };
+
+    const handleOnDragEnd = (result) => {
+        if (!result.destination) return;
+        const items = Array.from(steps);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        setSteps(items);
+    };
+
+    const handleLabelChange = (id, newLabel) => {
+        setSteps(steps.map(step => step.id === id ? { ...step, label: newLabel } : step));
+    };
+
+    // MOVE FROM ACTIVE TO DELETED
+    const moveToDeleted = (id) => {
+        const item = steps.find(s => s.id === id);
+        setDeletedSteps([...deletedSteps, item]);
+        setSteps(steps.filter(s => s.id !== id));
+    };
+
+    // RESTORE FROM DELETED TO ACTIVE
+    const restoreStep = (id) => {
+        const item = deletedSteps.find(s => s.id === id);
+        setSteps([...steps, item]);
+        setDeletedSteps(deletedSteps.filter(s => s.id !== id));
+    };
+
+    return (
+        <div className="ost-builder-container">
+            <div className="ost-header">
+                <h1>Order Status Management</h1>
+                <p>Drag and drop the items below to customize the order flow. The sequence here determines the order displayed in the frontend tracker.</p>
+            </div>
+
+            <div className="ost-status-table">
+                <div className="ost-table-header">
+                    <div style={{textAlign: 'center'}}>Order</div>
+                    <div>Status Name</div>
+                    <div style={{textAlign: 'right'}}>Actions</div>
+                </div>
+
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                    <Droppable droppableId="steps">
+                        {(provided) => (
+                            <ul className="ost-step-list" {...provided.droppableProps} ref={provided.innerRef}>
+                                {steps.map((step, index) => (
+                                    <Draggable key={step.id} draggableId={step.id} index={index}>
+                                        {(provided) => (
+                                            <li className="ost-list-item compact-row" ref={provided.innerRef} {...provided.draggableProps}>
+                                                <div className="col-drag" {...provided.dragHandleProps}>
+                                                    <span className="dashicons dashicons-menu"></span>
+                                                </div>
+                                                <div className="col-content">
+                                                    <div className="status-dot"></div>
+                                                    <div className="flex-text">
+                                                        {editingId === step.id ? (
+                                                            <input 
+                                                                type="text" 
+                                                                value={step.label} 
+                                                                onChange={(e) => handleLabelChange(step.id, e.target.value)} 
+                                                                onBlur={() => setEditingId(null)} 
+                                                                onKeyDown={(e) => e.key === 'Enter' && setEditingId(null)}
+                                                                autoFocus 
+                                                            />
+                                                        ) : (
+                                                            <>
+                                                                <div className="label-text">{step.label}</div>
+                                                                <div className="id-text">ID: {step.id}</div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="col-actions">
+                                                    <button onClick={() => setEditingId(step.id)} className="button-icon" title="Edit">
+                                                        <span className="dashicons dashicons-edit"></span>
+                                                    </button>
+                                                    <button onClick={() => moveToDeleted(step.id)} className="button-icon delete" title="Delete">
+                                                        <span className="dashicons dashicons-trash"></span>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </ul>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            </div>
+
+            <div className="ost-footer-sticky">
+                <div className="note"><strong>Note:</strong> You can always restore removed statuses from the "Removed Statuses" section below.</div>
+                <div className="footer-btns">
+                    <button onClick={resetToDefaults} className="btn-reset">RESET TO DEFAULTS</button>
+                    <button onClick={saveSettings} className="btn-save">SAVE CHANGES</button>
+                </div>
+            </div>
+
+            {/* THE MISSING INACTIVE STATUSES SECTION */}
+            {deletedSteps.length > 0 && (
+                <div className="ost-deleted-section">
+                    <h2 style={{marginTop: '60px', fontSize: '24px', fontWeight: '800'}}>Removed Statuses</h2>
+                    <p style={{color: '#64748b', marginBottom: '20px'}}>These will not appear in the frontend tracker.</p>
+                    
+                    <div className="ost-status-table">
+                        <div className="ost-table-header" style={{gridTemplateColumns: '1fr 120px'}}>
+                            <div>Status Name</div>
+                            <div style={{textAlign: 'right'}}>Actions</div>
+                        </div>
+                        {deletedSteps.map(step => (
+                            <div key={step.id} className="ost-list-item compact-row" style={{gridTemplateColumns: '1fr 120px'}}>
+                                <div className="col-content">
+                                    <div className="status-dot" style={{background: '#e2e8f0'}}></div>
+                                    <div className="flex-text">
+                                        <div className="label-text" style={{color: '#94a3b8'}}>{step.label}</div>
+                                        <div className="id-text">ID: {step.id}</div>
+                                    </div>
+                                </div>
+                                <div className="col-actions">
+                                    <button onClick={() => restoreStep(step.id)} className="button button-secondary" style={{fontSize: '11px', fontWeight: '700'}}>
+                                        RESTORE
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+render(<OrderTrackerBuilder />, document.getElementById('ost-admin-app'));
