@@ -11,6 +11,16 @@ add_action('admin_menu', function () {
         'dashicons-location-alt',
         6
     );
+
+    // Add Settings submenu
+    add_submenu_page(
+        'order-tracker-plugin',
+        'Settings',
+        'Settings',
+        'manage_options',
+        'order-tracker-settings',
+        'ost_render_settings_app'
+    );
 });
 
 function ost_render_admin_app()
@@ -18,6 +28,15 @@ function ost_render_admin_app()
     echo '<div class="wrap">
     <h1>Order Status Tracker Settings</h1>
     <div id="ost-admin-app">
+    </div>
+    </div>';
+}
+
+function ost_render_settings_app()
+{
+    echo '<div class="wrap">
+    <h1>Design Settings</h1>
+    <div id="ost-settings-app">
     </div>
     </div>';
 }
@@ -62,7 +81,41 @@ add_action('admin_enqueue_scripts', function ($hook) {
     );
 });
 
+// Enqueue scripts for Settings page
+add_action('admin_enqueue_scripts', function ($hook) {
+    if ('order-tracker_page_order-tracker-settings' !== $hook) return;
+
+    $asset_file = include(OST_PLUGIN_PATH . 'build/settings.asset.php');
+    wp_enqueue_script(
+        'ost-settings-script',
+        OST_PLUGIN_URL . 'build/settings.js',
+        $asset_file['dependencies'],
+        $asset_file['version'],
+        true
+    );
+
+    wp_localize_script(
+        'ost-settings-script',
+        'ostSettings',
+        array(
+            'saved' => get_option('ost_design_settings', [
+                'primary_color' => '#137fec',
+                'font_family' => 'Inter',
+                'use_theme_color' => false
+            ])
+        )
+    );
+
+    wp_enqueue_style(
+        'ost-settings-style',
+        OST_PLUGIN_URL . 'build/settings.css',
+        array(),
+        $asset_file['version']
+    );
+});
+
 add_action('rest_api_init', function () {
+    // Status tracking endpoint
     register_rest_route(
         'ost/v1',
         '/save-settings',
@@ -71,6 +124,21 @@ add_action('rest_api_init', function () {
             'callback' => function ($request) {
                 $params = $request->get_json_params();
                 update_option('ost_tracking_steps', $params['steps']);
+                return new WP_REST_Response(array('success' => true), 200);
+            },
+            'permission_callback' => fn() => current_user_can('manage_options')
+        )
+    );
+
+    // Design settings endpoint
+    register_rest_route(
+        'ost/v1',
+        '/save-design-settings',
+        array(
+            'methods' => 'POST',
+            'callback' => function ($request) {
+                $params = $request->get_json_params();
+                update_option('ost_design_settings', $params);
                 return new WP_REST_Response(array('success' => true), 200);
             },
             'permission_callback' => fn() => current_user_can('manage_options')
