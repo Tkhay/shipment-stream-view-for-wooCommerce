@@ -45,8 +45,8 @@ const OrderTrackerBuilder = () => {
         setSteps(items);
     };
 
-    const handleLabelChange = (id, newLabel) => {
-        setSteps(steps.map(step => step.id === id ? { ...step, label: newLabel } : step));
+    const updateStepProperty = (id, key, value) => {
+        setSteps(steps.map(step => step.id === id ? { ...step, [key]: value } : step));
     };
 
     // MOVE FROM ACTIVE TO DELETED
@@ -67,13 +67,13 @@ const OrderTrackerBuilder = () => {
         <div className="ost-builder-container">
             <div className="ost-header">
                 <h1>Order Status Management</h1>
-                <p>Drag and drop the items below to customize the order flow. The sequence here determines the order displayed in the frontend tracker.</p>
+                <p>Drag and drop items to customize the flow. Set each status as a <strong>Milestone</strong> (Progress Bar) or <strong>Exception</strong> (Alert Card).</p>
             </div>
 
             <div className="ost-status-table">
                 <div className="ost-table-header">
                     <div style={{textAlign: 'center'}}>Order</div>
-                    <div>Status Name</div>
+                    <div>Status Name & Type</div>
                     <div style={{textAlign: 'right'}}>Actions</div>
                 </div>
 
@@ -95,15 +95,25 @@ const OrderTrackerBuilder = () => {
                                                             <input 
                                                                 type="text" 
                                                                 value={step.label} 
-                                                                onChange={(e) => handleLabelChange(step.id, e.target.value)} 
+                                                                onChange={(e) => updateStepProperty(step.id, 'label', e.target.value)} 
                                                                 onBlur={() => setEditingId(null)} 
-                                                                onKeyDown={(e) => e.key === 'Enter' && setEditingId(null)}
                                                                 autoFocus 
                                                             />
                                                         ) : (
                                                             <>
                                                                 <div className="label-text">{step.label}</div>
                                                                 <div className="id-text">ID: {step.id}</div>
+                                                                
+                                                                {/*TYPE Selector*/}
+                                                                <select 
+                                                                    className="ost-type-select"
+                                                                    value={step.type || 'milestone'} 
+                                                                    onChange={(e) => updateStepProperty(step.id, 'type', e.target.value)}
+                                                                    style={{ marginTop: '8px', fontSize: '11px', display: 'block' }}
+                                                                >
+                                                                    <option value="milestone">Milestone (Bar)</option>
+                                                                    <option value="exception">Exception (Alert)</option>
+                                                                </select>
                                                             </>
                                                         )}
                                                     </div>
@@ -128,24 +138,17 @@ const OrderTrackerBuilder = () => {
             </div>
 
             <div className="ost-footer-sticky">
-                <div className="note"><strong>Note:</strong> You can always restore removed statuses from the "Removed Statuses" section below.</div>
                 <div className="footer-btns">
                     <button onClick={resetToDefaults} className="btn-reset">RESET TO DEFAULTS</button>
                     <button onClick={saveSettings} className="btn-save">SAVE CHANGES</button>
                 </div>
             </div>
 
-            {/* THE MISSING INACTIVE STATUSES SECTION */}
+            {/* RESTORED YOUR DELETED SECTION */}
             {deletedSteps.length > 0 && (
                 <div className="ost-deleted-section">
                     <h2 style={{marginTop: '60px', fontSize: '24px', fontWeight: '800'}}>Removed Statuses</h2>
-                    <p style={{color: '#64748b', marginBottom: '20px'}}>These will not appear in the frontend tracker.</p>
-                    
                     <div className="ost-status-table">
-                        <div className="ost-table-header" style={{gridTemplateColumns: '1fr 120px'}}>
-                            <div>Status Name</div>
-                            <div style={{textAlign: 'right'}}>Actions</div>
-                        </div>
                         {deletedSteps.map(step => (
                             <div key={step.id} className="ost-list-item compact-row" style={{gridTemplateColumns: '1fr 120px'}}>
                                 <div className="col-content">
@@ -156,9 +159,7 @@ const OrderTrackerBuilder = () => {
                                     </div>
                                 </div>
                                 <div className="col-actions">
-                                    <button onClick={() => restoreStep(step.id)} className="button button-secondary" style={{fontSize: '11px', fontWeight: '700'}}>
-                                        RESTORE
-                                    </button>
+                                    <button onClick={() => restoreStep(step.id)} className="button button-secondary">RESTORE</button>
                                 </div>
                             </div>
                         ))}

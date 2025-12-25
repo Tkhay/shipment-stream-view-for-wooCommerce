@@ -1,5 +1,6 @@
 @use "sass:color";
 
+// Theme Variables
 $ost-primary: #137fec;
 $ost-slate-50: #f8fafc;
 $ost-slate-100: #f1f5f9;
@@ -15,19 +16,40 @@ $ost-slate-900: #0f172a;
     margin: 40px auto;
     color: $ost-slate-900;
 
-    // SEARCH SECTION
+    // --- SEARCH SECTION ---
+    .ost-search-section {
+        text-align: center;
+        margin-bottom: 40px;
+        h1 { font-size: 36px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 8px; }
+        p { color: $ost-slate-500; font-size: 16px; }
+    }
+
     .ost-search-card {
-        background: #fff; padding: 32px; border-radius: 16px; border: 1px solid $ost-slate-200;
+        background: #fff;
+        padding: 32px;
+        border-radius: 16px;
+        border: 1px solid $ost-slate-200;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
         .ost-form {
-            display: flex; flex-direction: column; gap: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+
             .ost-input-flex {
-                display: flex; flex-direction: column; gap: 20px;
-                @media (min-width: 768px) { flex-direction: row; }
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                @media (min-width: 768px) { flex-direction: row; } //
             }
+
             .ost-input-group {
-                flex: 1; label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+                flex: 1;
+                min-width: 0;
+                label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
                 .ost-input-wrapper {
-                    display: flex; align-items: center; background: $ost-slate-50; border: 1px solid $ost-slate-200; border-radius: 8px; padding: 0 12px;
+                    display: flex; align-items: center; background: $ost-slate-50;
+                    border: 1px solid $ost-slate-200; border-radius: 8px; padding: 0 12px;
                     input { flex: 1; background: transparent; border: none !important; padding: 12px 0; outline: none !important; box-shadow: none !important; }
                     span { color: $ost-slate-400; font-size: 20px; margin-right: 10px; }
                 }
@@ -36,52 +58,71 @@ $ost-slate-900: #0f172a;
     }
 
     .ost-btn-track {
-        align-self: flex-start; height: 48px; padding: 0 28px; background: $ost-primary !important;
+        align-self: flex-start;
+        height: 48px; padding: 0 28px; background: $ost-primary !important;
         color: #fff !important; border: none; border-radius: 8px; font-weight: 800; cursor: pointer;
-        display: flex; align-items: center; gap: 10px;
+        display: flex; align-items: center; gap: 10px; transition: all 0.2s;
+        &:hover { background: color.adjust($ost-primary, $lightness: -10%) !important; }
     }
 
-    // STEPPER CONTAINER
+    // --- RESULT CARD & STEPPER ---
+    .ost-result-card {
+        background: #fff; border-radius: 16px; border: 1px solid $ost-slate-200;
+        overflow: hidden; margin-top: 30px;
+    }
+
+    .ost-card-header {
+        padding: 32px; border-bottom: 1px solid $ost-slate-100;
+        .ost-title-row { display: flex; align-items: center; gap: 15px; h2 { margin: 0; font-weight: 800; } }
+        .ost-badge { background: #eff6ff; color: $ost-primary; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+        .ost-placed-on { color: $ost-slate-500; margin-top: 8px; font-size: 14px; }
+    }
+
     .ost-stepper-container {
         padding: 40px 20px; position: relative; background: $ost-slate-50;
-        @media (min-width: 768px) { padding: 60px 40px; }
+        @media (min-width: 768px) { padding: 60px 40px; } //
 
         .ost-progress-line {
             position: absolute; background: $ost-slate-200; z-index: 1; border-radius: 10px;
-            left: 38px; top: 40px; bottom: 40px; width: 4px; height: auto;
+            // Mobile: Vertical Centered
+            left: 38px; top: 40px; bottom: 40px; width: 4px; height: auto; //
 
             @media (min-width: 768px) {
+                // Desktop: Horizontal Centered
                 top: 77px; left: 80px; right: 80px; bottom: auto; height: 6px; width: auto;
             }
         }
         
-        .ost-progress-fill { 
+                .ost-progress-fill { 
             background: $ost-primary;
             transition: all 1s ease-in-out;
             border-radius: 10px;
             
+            // Mobile: vertical progress (height grows from bottom)
             width: 100%;
             height: var(--progress, 0%);
 
             @media (min-width: 768px) {
+                // Desktop: horizontal progress (width grows from left)
                 height: 100%;
                 width: var(--progress, 0%);
             }
         }
 
         .ost-steps {
-            display: flex; flex-direction: column; gap: 40px; position: relative; z-index: 2;
+            display: flex; flex-direction: column; gap: 40px; position: relative; z-index: 2; //
             @media (min-width: 768px) { flex-direction: row; justify-content: space-between; gap: 0; }
         }
         
         .ost-step {
-            display: flex; align-items: center; gap: 20px;
+            display: flex; align-items: center; gap: 20px; //
             @media (min-width: 768px) { flex-direction: column; text-align: center; width: 120px; gap: 12px; }
 
             .ost-step-circle {
                 width: 40px; height: 40px; flex-shrink: 0; background: #fff; border: 4px solid $ost-slate-200;
                 border-radius: 50%; display: flex; align-items: center; justify-content: center;
                 color: $ost-slate-400; transition: all 0.3s;
+                .material-symbols-outlined { font-size: 20px; }
             }
             p { font-size: 13px; font-weight: 700; color: $ost-slate-400; margin: 0; }
 
@@ -96,13 +137,100 @@ $ost-slate-900: #0f172a;
         }
     }
 
-    // RESET BUTTON
+    // --- PRODUCT ITEMS SECTION ---
+    .ost-items-section {
+        padding: 20px;
+        @media (min-width: 768px) { padding: 32px; }
+        
+        h3 { 
+            display: flex; align-items: center; gap: 10px; 
+            font-size: 16px; font-weight: 800; margin-bottom: 20px;
+            @media (min-width: 768px) { font-size: 18px; margin-bottom: 25px; }
+        }
+    }
+
+    .ost-product-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px 0;
+        border-bottom: 1px solid $ost-slate-100;
+        &:last-of-type { border-bottom: none; }
+
+        @media (min-width: 768px) { gap: 16px; }
+
+        .ost-product-img {
+            // Smaller on mobile, larger on desktop
+            width: 64px; height: 64px; 
+            background: $ost-slate-50; border-radius: 8px;
+            overflow: hidden; flex-shrink: 0; border: 1px solid $ost-slate-100;
+            
+            @media (min-width: 768px) { width: 80px; height: 80px; }
+            
+            img { width: 100%; height: 100%; object-fit: cover; }
+        }
+
+        .ost-product-info {
+            display: flex; 
+            flex-direction: column; // Stack on mobile
+            gap: 8px;
+            width: 100%; 
+            
+            @media (min-width: 768px) { 
+                flex-direction: row; // Horizontal on desktop
+                justify-content: space-between; 
+                align-items: center;
+                gap: 16px;
+            }
+            
+            .ost-product-details {
+                display: flex; flex-direction: column; gap: 2px;
+                flex: 1; // Allow to grow and prevent text overflow
+                min-width: 0; // Allow text truncation if needed
+                
+                strong { 
+                    font-size: 14px; color: $ost-slate-900; font-weight: 700;
+                    @media (min-width: 768px) { font-size: 16px; }
+                }
+                .ost-product-meta { 
+                    font-size: 12px; color: $ost-slate-500;
+                    @media (min-width: 768px) { font-size: 14px; }
+                }
+                .ost-product-qty { 
+                    font-size: 13px; color: $ost-slate-700; margin-top: 4px;
+                    @media (min-width: 768px) { font-size: 14px; }
+                }
+            }
+            
+            .ost-product-price { 
+                font-size: 15px; font-weight: 800; color: $ost-slate-900;
+                align-self: flex-start; // Left-align on mobile
+                
+                @media (min-width: 768px) { 
+                    font-size: 16px;
+                    flex-shrink: 0; // Prevent price from shrinking
+                }
+            }
+        }
+    }
+
+    .ost-total-row {
+        margin-top: 24px; padding-top: 24px; border-top: 1px solid $ost-slate-100;
+        display: flex; justify-content: space-between; align-items: center;
+        span { font-size: 16px; color: $ost-slate-500; font-weight: 500; }
+        strong { font-size: 22px; color: $ost-slate-900; font-weight: 900; }
+    }
+
+    // --- RESET CONTAINER ---
     .ost-reset-container {
         margin-top: 32px; padding-top: 24px; border-top: 1px dashed $ost-slate-200; text-align: center;
         .ost-btn-reset {
             display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: $ost-slate-500;
             font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 8px;
+            transition: all 0.2s;
             &:hover { color: $ost-primary; background: rgba($ost-primary, 0.05); }
         }
     }
+
+    .ost-error { color: #ef4444; font-weight: 600; margin-top: 16px; font-size: 14px; }
 }
