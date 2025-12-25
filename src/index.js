@@ -20,21 +20,64 @@ const OrderTrackerBuilder = () => {
     });
     
     const [editingId, setEditingId] = useState(null);
+    const [isSaving, setIsSaving] = useState(false);
+    const [saveMessage, setSaveMessage] = useState('');
 
     const saveSettings = () => {
+        setIsSaving(true);
+        setSaveMessage('Saving...');
+        
         apiFetch({
             path: '/ssvfww/v1/save-settings',
             method: 'POST',
             data: { steps: steps },
-        }).then(() => alert('SETTINGS SAVED SUCCESSFULLY!'));
+        })
+        .then(() => {
+            setSaveMessage('Settings saved successfully!');
+            setTimeout(() => {
+                setSaveMessage('');
+                setIsSaving(false);
+            }, 2000);
+        })
+        .catch((error) => {
+            setSaveMessage(' Error saving settings. Please try again.');
+            console.error('Save error:', error);
+            setTimeout(() => {
+                setSaveMessage('');
+                setIsSaving(false);
+            }, 3000);
+        });
     };
 
     const resetToDefaults = () => {
         const defaultSteps = window.ssvfwwData?.defaultSteps || allWooStatuses;
         if (window.confirm('RESET TO WOOCOMMERCE ORDER STATUS DEFAULTS (WITH EXCEPTION TYPES)?')) {
+            setIsSaving(true);
+            setSaveMessage('Resetting...');
+            
             setSteps(defaultSteps);
             setDeletedSteps([]);
-            apiFetch({ path: '/ssvfww/v1/save-settings', method: 'POST', data: { steps: defaultSteps } });
+            
+            apiFetch({ 
+                path: '/ssvfww/v1/save-settings', 
+                method: 'POST', 
+                data: { steps: defaultSteps } 
+            })
+            .then(() => {
+                setSaveMessage('Reset to defaults successfully!');
+                setTimeout(() => {
+                    setSaveMessage('');
+                    setIsSaving(false);
+                }, 2000);
+            })
+            .catch((error) => {
+                setSaveMessage('Error resetting. Please try again.');
+                console.error('Reset error:', error);
+                setTimeout(() => {
+                    setSaveMessage('');
+                    setIsSaving(false);
+                }, 3000);
+            });
         }
     };
 
@@ -141,8 +184,11 @@ const OrderTrackerBuilder = () => {
 
             <div className="ssvfww-footer-sticky">
                 <div className="footer-btns">
-                    <button onClick={resetToDefaults} className="btn-reset">RESET TO DEFAULTS</button>
-                    <button onClick={saveSettings} className="btn-save">SAVE CHANGES</button>
+                    <button onClick={resetToDefaults} className="btn-reset" disabled={isSaving}>RESET TO DEFAULTS</button>
+                    <button onClick={saveSettings} className="btn-save" disabled={isSaving}>
+                        {isSaving ? 'SAVING...' : 'SAVE CHANGES'}
+                    </button>
+                    {saveMessage && <span className="save-message">{saveMessage}</span>}
                 </div>
             </div>
 
