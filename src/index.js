@@ -30,10 +30,11 @@ const OrderTrackerBuilder = () => {
     };
 
     const resetToDefaults = () => {
-        if (window.confirm('RESET TO WOOCOMMERCE DEFAULTS?')) {
-            setSteps(allWooStatuses);
+        const defaultSteps = window.ostData?.defaultSteps || allWooStatuses;
+        if (window.confirm('RESET TO PLUGIN DEFAULTS (WITH EXCEPTION TYPES)?')) {
+            setSteps(defaultSteps);
             setDeletedSteps([]);
-            apiFetch({ path: '/ost/v1/save-settings', method: 'POST', data: { steps: allWooStatuses } });
+            apiFetch({ path: '/ost/v1/save-settings', method: 'POST', data: { steps: defaultSteps } });
         }
     };
 

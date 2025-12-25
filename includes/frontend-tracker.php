@@ -23,10 +23,17 @@ function ost_render_frontend_tracker()
     $saved_steps = get_option('ost_tracking_steps', []);
 
     if ($order_id && $email) {
-        $order = wc_get_order($order_id);
-        if (!$order || strtolower($order->get_billing_email()) !== strtolower($email)) {
-            $order = false;
-            $error = "ORDER NOT FOUND OR EMAIL DOES NOT MATCH.";
+        if (!empty($_POST['ost_hp_field'])) {
+            die("Bot detected.");
+        }
+        if (!isset($_POST['ost_tracker_nonce']) || !wp_verify_nonce($_POST['ost_tracker_nonce'], 'ost_track_order_action')) {
+            $error = "SECURITY CHECK FAILED. PLEASE REFRESH THE PAGE.";
+        } else {
+            $order = wc_get_order($order_id);
+            if (!$order || strtolower($order->get_billing_email()) !== strtolower($email)) {
+                $order = false;
+                $error = "ORDER NOT FOUND OR EMAIL DOES NOT MATCH.";
+            }
         }
     }
 
@@ -41,19 +48,24 @@ function ost_render_frontend_tracker()
                 </div>
                 <div class="ost-search-card">
                     <form method="POST" class="ost-form">
+                        <?php wp_nonce_field('ost_track_order_action', 'ost_tracker_nonce'); ?>
+
+                        <div style="display:none;">
+                            <input type="text" name="ost_hp_field" value="">
+                        </div>
                         <div class="ost-input-flex">
                             <div class="ost-input-group">
                                 <label>Order ID</label>
                                 <div class="ost-input-wrapper">
                                     <span class="material-symbols-outlined">tag</span>
-                                    <input type="text" name="ost_order_id" value="<?php echo esc_attr($order_id); ?>" placeholder="e.g. 920192" required>
+                                    <input type="text" name="ost_order_id" value="<?php echo esc_attr($order_id); ?>" placeholder="e.g. 92234" required>
                                 </div>
                             </div>
                             <div class="ost-input-group">
                                 <label>Billing Email</label>
                                 <div class="ost-input-wrapper">
                                     <span class="material-symbols-outlined">mail</span>
-                                    <input type="email" name="ost_email" value="<?php echo esc_attr($email); ?>" placeholder="alex@example.com" required>
+                                    <input type="email" name="ost_email" value="<?php echo esc_attr($email); ?>" placeholder="email@example.com" required>
                                 </div>
                             </div>
                         </div>
@@ -81,9 +93,11 @@ function ost_render_frontend_tracker()
             foreach ($milestones as $idx => $ms) {
                 if ($ms['id'] === $current_status || ($current_status === 'draft' && $idx === 0)) {
                     $current_idx = $idx;
+                    break;
                 }
             }
 
+            // PROGRESS CALCULATION
             $progress = ($current_idx !== -1 && count($milestones) > 1) ? ($current_idx / (count($milestones) - 1)) * 100 : 0;
         ?>
             <section class="ost-result-section">
@@ -108,7 +122,7 @@ function ost_render_frontend_tracker()
 
                     <div class="ost-stepper-container <?php echo $active_exception ? 'ost-dimmed' : ''; ?>">
                         <div class="ost-progress-line">
-                            <div class="ost-progress-fill" style="width: <?php echo $progress; ?>%;"></div>
+                            <div class="ost-progress-fill" style="width: <?php echo $progress; ?>%; height: <?php echo $progress; ?>%;"></div>
                         </div>
                         <div class="ost-steps">
                             <?php foreach ($milestones as $idx => $step):
@@ -117,7 +131,8 @@ function ost_render_frontend_tracker()
                             ?>
                                 <div class="ost-step <?php echo $is_completed ? 'completed' : ''; ?> <?php echo $is_active ? 'active' : ''; ?>">
                                     <div class="ost-step-circle">
-                                        <span class="material-symbols-outlined"><?php echo $is_completed ? 'check' : 'radio_button_unchecked'; ?></span>
+                                        <span class="material-symbols-outlined"><?php echo $is_completed ? 'check' : 'radio_button_unchecked'; ?>
+                                        </span>
                                     </div>
                                     <p><?php echo esc_html($step['label']); ?></p>
                                 </div>
