@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Frontend Shortcode Logic - Elite Design Build
+ * Frontend Shortcode Logic - Complete Elite Build (Details First)
  */
 
 if (!defined('ABSPATH')) exit;
@@ -32,6 +32,7 @@ function ost_render_frontend_tracker()
 
     ob_start(); ?>
     <div class="ost-frontend-root">
+
         <?php if (!$order): ?>
             <section class="ost-search-section">
                 <div class="ost-search-header">
@@ -64,11 +65,10 @@ function ost_render_frontend_tracker()
         <?php else:
             $current_status = $order->get_status();
 
-            // 2. DYNAMIC LOGIC: Milestones vs. Exceptions
+            // DYNAMIC CATEGORIZATION
             $milestones = array_values(array_filter($saved_steps, fn($s) => ($s['type'] ?? 'milestone') === 'milestone'));
             $exceptions = array_values(array_filter($saved_steps, fn($s) => ($s['type'] ?? '') === 'exception'));
 
-            // Check for active exception alert
             $active_exception = false;
             foreach ($exceptions as $ex) {
                 if ($ex['id'] === $current_status) {
@@ -77,7 +77,6 @@ function ost_render_frontend_tracker()
                 }
             }
 
-            // Find progress index
             $current_idx = -1;
             foreach ($milestones as $idx => $ms) {
                 if ($ms['id'] === $current_status || ($current_status === 'draft' && $idx === 0)) {
@@ -90,17 +89,15 @@ function ost_render_frontend_tracker()
             <section class="ost-result-section">
                 <div class="ost-result-card">
                     <div class="ost-card-header">
-                        <div class="ost-header-info">
-                            <div class="ost-title-row">
-                                <h2>Order #<?php echo $order->get_id(); ?></h2>
-                                <span class="ost-badge"><?php echo wc_get_order_status_name($current_status); ?></span>
-                            </div>
-                            <p class="ost-placed-on">Placed on <strong><?php echo wc_format_datetime($order->get_date_created()); ?></strong></p>
+                        <div class="ost-title-row">
+                            <h2>Order #<?php echo $order->get_id(); ?></h2>
+                            <span class="ost-badge"><?php echo wc_get_order_status_name($current_status); ?></span>
                         </div>
+                        <p class="ost-placed-on">Placed on <strong><?php echo wc_format_datetime($order->get_date_created()); ?></strong></p>
                     </div>
 
                     <?php if ($active_exception): ?>
-                        <div class="ost-exception-alert <?php echo esc_attr($current_status); ?>">
+                        <div class="ost-exception-alert">
                             <span class="material-symbols-outlined">warning</span>
                             <div class="ost-alert-content">
                                 <strong><?php echo esc_html($active_exception['label']); ?></strong>
@@ -111,7 +108,7 @@ function ost_render_frontend_tracker()
 
                     <div class="ost-stepper-container <?php echo $active_exception ? 'ost-dimmed' : ''; ?>">
                         <div class="ost-progress-line">
-                            <div class="ost-progress-fill" style="width: <?php echo $progress; ?>%; height: <?php echo $progress; ?>%;"></div>
+                            <div class="ost-progress-fill" style="width: <?php echo $progress; ?>%;"></div>
                         </div>
                         <div class="ost-steps">
                             <?php foreach ($milestones as $idx => $step):
@@ -119,10 +116,25 @@ function ost_render_frontend_tracker()
                                 $is_completed = ($idx <= $current_idx && $current_idx !== -1);
                             ?>
                                 <div class="ost-step <?php echo $is_completed ? 'completed' : ''; ?> <?php echo $is_active ? 'active' : ''; ?>">
-                                    <div class="ost-step-circle"><span class="material-symbols-outlined"><?php echo $is_completed ? 'check' : 'radio_button_unchecked'; ?></span></div>
+                                    <div class="ost-step-circle">
+                                        <span class="material-symbols-outlined"><?php echo $is_completed ? 'check' : 'radio_button_unchecked'; ?></span>
+                                    </div>
                                     <p><?php echo esc_html($step['label']); ?></p>
                                 </div>
                             <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <div class="ost-details-grid">
+                        <div class="ost-detail-box">
+                            <h4><span class="material-symbols-outlined">local_shipping</span> Shipping Address</h4>
+                            <p><?php echo $order->get_formatted_shipping_address(); ?></p>
+                        </div>
+                        <div class="ost-detail-box">
+                            <h4><span class="material-symbols-outlined">person</span> Customer Details</h4>
+                            <p><strong><?php echo $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(); ?></strong></p>
+                            <p><?php echo $order->get_billing_email(); ?></p>
+                            <p><?php echo $order->get_billing_phone(); ?></p>
                         </div>
                     </div>
 
