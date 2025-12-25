@@ -3,10 +3,10 @@
 /**
  * Plugin Name: Shipment Stream View for WooCommerce
  * Description: A modern visual order tracking bar for WooCommerce.
- * Version: 1.1.0
+ * Version: 1.0.0
  * Author: Tieku Asare
- * Text Domain: shipment-stream-view-for-woocommerce
  * Author URI: https://www.tiekuasare.com
+ * Text Domain: shipment-stream-view-for-woocommerce
  * License: GPL-2.0
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Requires PHP: 7.2
