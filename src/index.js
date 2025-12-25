@@ -31,7 +31,7 @@ const OrderTrackerBuilder = () => {
 
     const resetToDefaults = () => {
         const defaultSteps = window.ostData?.defaultSteps || allWooStatuses;
-        if (window.confirm('RESET TO PLUGIN DEFAULTS (WITH EXCEPTION TYPES)?')) {
+        if (window.confirm('RESET TO WOOCOMMERCE ORDER STATUS DEFAULTS (WITH EXCEPTION TYPES)?')) {
             setSteps(defaultSteps);
             setDeletedSteps([]);
             apiFetch({ path: '/ost/v1/save-settings', method: 'POST', data: { steps: defaultSteps } });
@@ -68,7 +68,8 @@ const OrderTrackerBuilder = () => {
         <div className="ost-builder-container">
             <div className="ost-header">
                 <h1>Order Status Management</h1>
-                <p>Drag and drop items to customize the flow. Set each status as a <strong>Milestone</strong> (Progress Bar) or <strong>Exception</strong> (Alert Card).</p>
+                <p>Rearrange the tracking steps by dragging them into the order you prefer.</p>
+                <p>Choose <strong>Milestone</strong> for normal delivery stages (shown on the progress bar), or <strong>Exception</strong> for special cases (shown as alert cards).</p>
             </div>
 
             <div className="ost-status-table">

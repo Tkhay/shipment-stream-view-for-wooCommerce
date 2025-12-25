@@ -12,8 +12,19 @@ function ost_render_frontend_tracker()
     $asset_file = OST_PLUGIN_PATH . 'build/frontend.asset.php';
     if (file_exists($asset_file)) {
         $frontend_asset = include($asset_file);
-        wp_enqueue_style('ost-frontend-style', OST_PLUGIN_URL . 'build/frontend.css', array(), $frontend_asset['version']);
-        wp_enqueue_style('ost-material-icons', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1', array(), null);
+        wp_enqueue_style(
+            'ost-frontend-style',
+            OST_PLUGIN_URL . 'build/frontend.css',
+            array(),
+            $frontend_asset['version']
+        );
+
+        wp_enqueue_style(
+            'ost-material-icons',
+            'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1',
+            array(),
+            null
+        );
 
         // 2. LOAD DESIGN SETTINGS AND APPLY
         $design_settings = get_option('ost_design_settings', [
@@ -25,7 +36,6 @@ function ost_render_frontend_tracker()
         // Determine primary color
         $primary_color = '#137fec';
         if (!empty($design_settings['use_theme_color'])) {
-            // Try detect theme color (simplified - just use default for now)
             $primary_color = '#137fec'; // Fallback to default
         } else {
             $primary_color = $design_settings['primary_color'];

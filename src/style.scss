@@ -13,12 +13,24 @@ $slate-900: #0f172a;
     max-width: 1024px;
     margin: 40px auto;
     background: $bg-light;
-    padding: 0 20px;
+    padding: 40px;
 
     .ost-header {
         margin-bottom: 32px;
-        h1 { font-size: 36px; font-weight: 900; color: $slate-900; letter-spacing: -0.025em; margin-bottom: 12px; }
-        p { font-size: 18px; color: $slate-500; line-height: 1.6; max-width: 768px; }
+        h1 { font-size: 36px; 
+            font-weight: 900; 
+            color: $slate-900; 
+            letter-spacing: -0.025em; 
+            margin-bottom: 12px;
+            text-align: center; 
+        }
+        p { 
+            font-size: 18px; 
+            color: $slate-500; 
+            line-height: 1.6; 
+            // max-width: 768px; 
+            padding: 0 20px; 
+        }
     }
 
     /* Main Table Container */
