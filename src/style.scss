@@ -52,7 +52,35 @@ $slate-900: #0f172a;
             font-weight: 600;
             color: $slate-500;
             letter-spacing: 0.05em;
+
+            .table-header-center {
+                text-align: center;
+            }
+
+            .table-header-right {
+                text-align: right;
+            }
         }
+    }
+
+    /* Section Title */
+    .section-title {
+        margin-top: 60px;
+        font-size: 24px;
+        font-weight: 800;
+    }
+
+    /* Deleted/Inactive Row Styling */
+    .deleted-row {
+        grid-template-columns: 1fr 120px;
+    }
+
+    .status-dot-inactive {
+        background: #e2e8f0;
+    }
+
+    .label-text-inactive {
+        color: #94a3b8;
     }
 
     /* Row Styling */
