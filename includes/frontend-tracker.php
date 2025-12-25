@@ -48,8 +48,8 @@ function ssvfww_render_frontend_tracker()
         wp_add_inline_style('ssvfww-frontend-style', $custom_css);
     }
 
-    $order_id = isset($_POST['ssvfww_order_id']) ? sanitize_text_field($_POST['ssvfww_order_id']) : '';
-    $email = isset($_POST['ssvfww_email']) ? sanitize_email($_POST['ssvfww_email']) : '';
+    $order_id = isset($_POST['ssvfww_order_id']) ? sanitize_text_field(wp_unslash($_POST['ssvfww_order_id'])) : '';
+    $email = isset($_POST['ssvfww_email']) ? sanitize_email(wp_unslash($_POST['ssvfww_email'])) : '';
     $order = false;
     $error = false;
     $saved_steps = get_option('ssvfww_tracking_steps', array());
@@ -58,7 +58,10 @@ function ssvfww_render_frontend_tracker()
         if (! empty($_POST['ssvfww_hp_field'])) {
             die("Bot detected.");
         }
-        if (! isset($_POST['ssvfww_tracker_nonce']) || ! wp_verify_nonce($_POST['ssvfww_tracker_nonce'], 'ssvfww_track_order_action')) {
+
+        $nonce = isset($_POST['ssvfww_tracker_nonce']) ? sanitize_text_field(wp_unslash($_POST['ssvfww_tracker_nonce'])) : '';
+
+        if (! $nonce || ! wp_verify_nonce($nonce, 'ssvfww_track_order_action')) {
             $error = "SECURITY CHECK FAILED. PLEASE REFRESH THE PAGE.";
         } else {
             $order = wc_get_order($order_id);
@@ -103,7 +106,7 @@ function ssvfww_render_frontend_tracker()
                         </div>
                         <button type="submit" class="ssvfww-btn-track">TRACK NOW <span class="material-symbols-outlined">arrow_forward</span></button>
                     </form>
-                    <?php if ($error): ?><p class="ssvfww-error"><?php echo $error; ?></p><?php endif; ?>
+                    <?php if ($error): ?><p class="ssvfww-error"><?php echo esc_html($error); ?></p><?php endif; ?>
                 </div>
             </section>
         <?php else:
@@ -136,10 +139,10 @@ function ssvfww_render_frontend_tracker()
                 <div class="ssvfww-result-card">
                     <div class="ssvfww-card-header">
                         <div class="ssvfww-title-row">
-                            <h2>Order #<?php echo $order->get_id(); ?></h2>
-                            <span class="ssvfww-badge"><?php echo wc_get_order_status_name($current_status); ?></span>
+                            <h2>Order #<?php echo esc_html($order->get_id()); ?></h2>
+                            <span class="ssvfww-badge"><?php echo esc_html(wc_get_order_status_name($current_status)); ?></span>
                         </div>
-                        <p class="ssvfww-placed-on">Placed on <strong><?php echo wc_format_datetime($order->get_date_created()); ?></strong></p>
+                        <p class="ssvfww-placed-on">Placed on <strong><?php echo esc_html(wc_format_datetime($order->get_date_created())); ?></strong></p>
                     </div>
 
                     <?php if ($active_exception): ?>
@@ -154,7 +157,7 @@ function ssvfww_render_frontend_tracker()
 
                     <div class="ssvfww-stepper-container <?php echo $active_exception ? 'ssvfww-dimmed' : ''; ?>">
                         <div class="ssvfww-progress-line">
-                            <div class="ssvfww-progress-fill" style="width: <?php echo $progress; ?>%; height: <?php echo $progress; ?>%;"></div>
+                            <div class="ssvfww-progress-fill" style="width: <?php echo esc_attr($progress); ?>%; height: <?php echo esc_attr($progress); ?>%;"></div>
                         </div>
                         <div class="ssvfww-steps">
                             <?php foreach ($milestones as $idx => $step):
@@ -175,13 +178,13 @@ function ssvfww_render_frontend_tracker()
                     <div class="ssvfww-details-grid">
                         <div class="ssvfww-detail-box">
                             <h4><span class="material-symbols-outlined">local_shipping</span> Shipping Address</h4>
-                            <p><?php echo $order->get_formatted_shipping_address(); ?></p>
+                            <p><?php echo wp_kses_post($order->get_formatted_shipping_address()); ?></p>
                         </div>
                         <div class="ssvfww-detail-box">
                             <h4><span class="material-symbols-outlined">person</span> Customer Details</h4>
-                            <p><strong><?php echo $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(); ?></strong></p>
-                            <p><?php echo $order->get_billing_email(); ?></p>
-                            <p><?php echo $order->get_billing_phone(); ?></p>
+                            <p><strong><?php echo esc_html($order->get_billing_first_name() . ' ' . $order->get_billing_last_name()); ?></strong></p>
+                            <p><?php echo esc_html($order->get_billing_email()); ?></p>
+                            <p><?php echo esc_html($order->get_billing_phone()); ?></p>
                         </div>
                     </div>
 
@@ -192,25 +195,25 @@ function ssvfww_render_frontend_tracker()
                             $meta_data = $item->get_formatted_meta_data('');
                         ?>
                             <div class="ssvfww-product-row">
-                                <div class="ssvfww-product-img"><?php echo $product ? $product->get_image('thumbnail') : ''; ?></div>
+                                <div class="ssvfww-product-img"><?php echo $product ? wp_kses_post($product->get_image('thumbnail')) : ''; ?></div>
                                 <div class="ssvfww-product-info">
                                     <div class="ssvfww-product-details">
                                         <strong><?php echo esc_html($item->get_name()); ?></strong>
                                         <?php if ($meta_data): ?>
                                             <span class="ssvfww-product-meta">
-                                                <?php echo implode(' • ', array_map(fn($m) => $m->display_key . ': ' . $m->display_value, $meta_data)); ?>
+                                                <?php echo esc_html(implode(' • ', array_map(fn($m) => $m->display_key . ': ' . $m->display_value, $meta_data))); ?>
                                             </span>
                                         <?php endif; ?>
                                         <span class="ssvfww-product-qty">Qty: <?php echo esc_html($item->get_quantity()); ?></span>
                                     </div>
-                                    <div class="ssvfww-product-price"><?php echo $order->get_formatted_line_subtotal($item); ?></div>
+                                    <div class="ssvfww-product-price"><?php echo wp_kses_post($order->get_formatted_line_subtotal($item)); ?></div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
 
                         <div class="ssvfww-total-row">
                             <span>Total Amount</span>
-                            <strong><?php echo $order->get_formatted_order_total(); ?></strong>
+                            <strong><?php echo wp_kses_post($order->get_formatted_order_total()); ?></strong>
                         </div>
 
                         <div class="ssvfww-reset-container">

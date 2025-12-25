@@ -2,7 +2,7 @@
 Contributors: onetkhay
 Donate link: https://buymeacoffee.com/tiekuasare
 Tags: woocommerce, order tracking, shipment tracking, order status, tracking
-Requires at least: 6.0
+Requires at least: 6.9
 Tested up to: 6.9
 Requires PHP: 7.2
 Stable tag: 1.0.0
