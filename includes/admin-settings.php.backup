@@ -1,5 +1,5 @@
 <?php
-if (! defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 
 add_action('admin_menu', function () {
     add_menu_page(
@@ -26,24 +26,24 @@ add_action('admin_menu', function () {
 function ssvfww_render_admin_app()
 {
     echo '<div class="wrap">
-	<h1>Shipment Stream View - Status Management</h1>
-	<div id="ssvfww-admin-app">
-	</div>
-	</div>';
+    <h1>Shipment Stream View - Status Management</h1>
+    <div id="ssvfww-admin-app">
+    </div>
+    </div>';
 }
 
 function ssvfww_render_settings_app()
 {
     echo '<div class="wrap">
-	<h1>Shipment Stream View - Design Settings</h1>
-	<div id="ssvfww-settings-app">
-	</div>
-	</div>';
+    <h1>Shipment Stream View - Design Settings</h1>
+    <div id="ssvfww-settings-app">
+    </div>
+    </div>';
 }
 
 add_action('admin_enqueue_scripts', function ($hook) {
     if ('toplevel_page_ssvfww-main' !== $hook) return;
-    $asset_file = include SSVFWW_PLUGIN_PATH . 'build/index.asset.php';
+    $asset_file = include(SSVFWW_PLUGIN_PATH . 'build/index.asset.php');
     wp_enqueue_script(
         'ssvfww-script',
         SSVFWW_PLUGIN_URL . 'build/index.js',
@@ -53,9 +53,9 @@ add_action('admin_enqueue_scripts', function ($hook) {
     );
 
     $wc_statuses = wc_get_order_statuses();
-    $formatted_statuses = array();
+    $formatted_statuses = [];
     foreach ($wc_statuses as $id => $label) {
-        $formatted_statuses[] = array('id' => str_replace('wc-', '', $id), 'label' => $label);
+        $formatted_statuses[] = ['id' => str_replace('wc-', '', $id), 'label' => $label];
     }
 
     wp_localize_script(
@@ -63,14 +63,14 @@ add_action('admin_enqueue_scripts', function ($hook) {
         'ssvfwwData',
         array(
             'allStatuses' => $formatted_statuses,
-            'savedOrder'  => get_option('ssvfww_tracking_steps', array()),
-            'defaultSteps' => array(
-                array('id' => 'pending',    'label' => 'Order Received', 'type' => 'milestone'),
-                array('id' => 'processing', 'label' => 'Processing',     'type' => 'milestone'),
-                array('id' => 'on-hold',    'label' => 'Issue Detected', 'type' => 'exception'),
-                array('id' => 'completed',  'label' => 'Delivered',      'type' => 'milestone'),
-                array('id' => 'cancelled',  'label' => 'Order Cancelled', 'type' => 'exception')
-            )
+            'savedOrder'  => get_option('ssvfww_tracking_steps', []),
+            'defaultSteps' => [
+                ['id' => 'pending',    'label' => 'Order Received', 'type' => 'milestone'],
+                ['id' => 'processing', 'label' => 'Processing',     'type' => 'milestone'],
+                ['id' => 'on-hold',    'label' => 'Issue Detected', 'type' => 'exception'],
+                ['id' => 'completed',  'label' => 'Delivered',      'type' => 'milestone'],
+                ['id' => 'cancelled',  'label' => 'Order Cancelled', 'type' => 'exception']
+            ]
         )
     );
     wp_enqueue_style(
@@ -85,7 +85,7 @@ add_action('admin_enqueue_scripts', function ($hook) {
 add_action('admin_enqueue_scripts', function ($hook) {
     if ('shipment-stream_page_ssvfww-settings' !== $hook) return;
 
-    $asset_file = include SSVFWW_PLUGIN_PATH . 'build/settings.asset.php';
+    $asset_file = include(SSVFWW_PLUGIN_PATH . 'build/settings.asset.php');
     wp_enqueue_script(
         'ssvfww-settings-script',
         SSVFWW_PLUGIN_URL . 'build/settings.js',
@@ -98,11 +98,11 @@ add_action('admin_enqueue_scripts', function ($hook) {
         'ssvfww-settings-script',
         'ssvfwwSettings',
         array(
-            'saved' => get_option('ssvfww_design_settings', array(
+            'saved' => get_option('ssvfww_design_settings', [
                 'primary_color' => '#137fec',
                 'font_family' => 'Inter',
                 'use_theme_color' => false
-            ))
+            ])
         )
     );
 

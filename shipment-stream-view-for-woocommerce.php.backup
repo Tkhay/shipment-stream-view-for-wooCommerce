@@ -15,7 +15,7 @@
  * WC tested up to: 10.0
  */
 
-if (! defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 
 // Path Constants
 define('SSVFWW_PLUGIN_PATH', plugin_dir_path(__FILE__));
@@ -54,20 +54,20 @@ function ssvfww_set_default_tracking_logic()
 {
     $existing = get_option('ssvfww_tracking_steps');
 
-    if (! $existing) {
+    if (!$existing) {
 
-        $default_steps = array(
-            array('id' => 'pending',    'label' => 'Order Received', 'type' => 'milestone'),
-            array('id' => 'processing', 'label' => 'Processing',     'type' => 'milestone'),
-            array('id' => 'on-hold',    'label' => 'Issue Detected', 'type' => 'exception'),
-            array('id' => 'completed',  'label' => 'Delivered',      'type' => 'milestone'),
-            array('id' => 'cancelled',  'label' => 'Order Cancelled', 'type' => 'exception')
-        );
+        $default_steps = [
+            ['id' => 'pending',    'label' => 'Order Received', 'type' => 'milestone'],
+            ['id' => 'processing', 'label' => 'Processing',     'type' => 'milestone'],
+            ['id' => 'on-hold',    'label' => 'Issue Detected', 'type' => 'exception'],
+            ['id' => 'completed',  'label' => 'Delivered',      'type' => 'milestone'],
+            ['id' => 'cancelled',  'label' => 'Order Cancelled', 'type' => 'exception']
+        ];
         update_option('ssvfww_tracking_steps', $default_steps);
     } else {
         $needs_update = false;
         foreach ($existing as &$step) {
-            if (! isset($step['type'])) {
+            if (!isset($step['type'])) {
                 $step['type'] = 'milestone';
                 $needs_update = true;
             }

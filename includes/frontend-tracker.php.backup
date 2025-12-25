@@ -4,14 +4,14 @@
  * Frontend Shortcode Logic - Complete Elite Build (Details First)
  */
 
-if (! defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 
 function ssvfww_render_frontend_tracker()
 {
     // 1. ASSET LOADING
     $asset_file = SSVFWW_PLUGIN_PATH . 'build/frontend.asset.php';
     if (file_exists($asset_file)) {
-        $frontend_asset = include $asset_file;
+        $frontend_asset = include($asset_file);
         wp_enqueue_style(
             'ssvfww-frontend-style',
             SSVFWW_PLUGIN_URL . 'build/frontend.css',
@@ -27,21 +27,21 @@ function ssvfww_render_frontend_tracker()
         );
 
         // 2. LOAD DESIGN SETTINGS AND APPLY
-        $design_settings = get_option('ssvfww_design_settings', array(
+        $design_settings = get_option('ssvfww_design_settings', [
             'primary_color' => '#137fec',
             'font_family' => 'Inter',
             'use_theme_color' => false
-        ));
+        ]);
 
         // Determine primary color
         $primary_color = '#137fec';
-        if (! empty($design_settings['use_theme_color'])) {
+        if (!empty($design_settings['use_theme_color'])) {
             $primary_color = '#137fec'; // Fallback to default
         } else {
             $primary_color = $design_settings['primary_color'];
         }
 
-        $font_family = ! empty($design_settings['font_family']) ? $design_settings['font_family'] : 'Inter';
+        $font_family = !empty($design_settings['font_family']) ? $design_settings['font_family'] : 'Inter';
 
         // Generate CSS variables
         $custom_css = ".ssvfww-frontend-root { --ssvfww-primary: {$primary_color}; --ssvfww-font-family: '{$font_family}', sans-serif; }";
@@ -52,17 +52,17 @@ function ssvfww_render_frontend_tracker()
     $email = isset($_POST['ssvfww_email']) ? sanitize_email($_POST['ssvfww_email']) : '';
     $order = false;
     $error = false;
-    $saved_steps = get_option('ssvfww_tracking_steps', array());
+    $saved_steps = get_option('ssvfww_tracking_steps', []);
 
     if ($order_id && $email) {
-        if (! empty($_POST['ssvfww_hp_field'])) {
+        if (!empty($_POST['ssvfww_hp_field'])) {
             die("Bot detected.");
         }
-        if (! isset($_POST['ssvfww_tracker_nonce']) || ! wp_verify_nonce($_POST['ssvfww_tracker_nonce'], 'ssvfww_track_order_action')) {
+        if (!isset($_POST['ssvfww_tracker_nonce']) || !wp_verify_nonce($_POST['ssvfww_tracker_nonce'], 'ssvfww_track_order_action')) {
             $error = "SECURITY CHECK FAILED. PLEASE REFRESH THE PAGE.";
         } else {
             $order = wc_get_order($order_id);
-            if (! $order || strtolower($order->get_billing_email()) !== strtolower($email)) {
+            if (!$order || strtolower($order->get_billing_email()) !== strtolower($email)) {
                 $order = false;
                 $error = "ORDER NOT FOUND OR EMAIL DOES NOT MATCH.";
             }
@@ -72,7 +72,7 @@ function ssvfww_render_frontend_tracker()
     ob_start(); ?>
     <div class="ssvfww-frontend-root">
 
-        <?php if (! $order): ?>
+        <?php if (!$order): ?>
             <section class="ssvfww-search-section">
                 <div class="ssvfww-search-header">
                     <h1>Track Your Order</h1>
@@ -82,7 +82,7 @@ function ssvfww_render_frontend_tracker()
                     <form method="POST" class="ssvfww-form">
                         <?php wp_nonce_field('ssvfww_track_order_action', 'ssvfww_tracker_nonce'); ?>
 
-                        <div class="ssvfww-honeypot">
+                        <div style="display:none;">
                             <input type="text" name="ssvfww_hp_field" value="">
                         </div>
                         <div class="ssvfww-input-flex">
@@ -96,7 +96,7 @@ function ssvfww_render_frontend_tracker()
                             <div class="ssvfww-input-group">
                                 <label>Billing Email</label>
                                 <div class="ssvfww-input-wrapper">
-                                    <span class="material-symbols-outlined">email</span>
+                                    <span class="material-symbols-outlined">mail</span>
                                     <input type="email" name="ssvfww_email" value="<?php echo esc_attr($email); ?>" placeholder="email@example.com" required>
                                 </div>
                             </div>

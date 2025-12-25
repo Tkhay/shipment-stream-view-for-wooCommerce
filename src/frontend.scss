@@ -41,6 +41,10 @@ $ssvfww-slate-900: #0f172a;
                 flex-direction: column;
                 gap: 28px;
 
+                .ssvfww-honeypot {
+                    display: none;
+                }
+
                 .ssvfww-input-flex {
                     display: flex;
                     gap: 20px;
