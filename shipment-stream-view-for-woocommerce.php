@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: Shipment Stream View for WooCommerce
- * Description: A modern visual order tracking bar for WooCommerce.
+ * Description: A modern visual order tracking system for WooCommerce that displays shipping milestones, real-time status updates, and custom alerts in a responsive, customizable timeline view.
  * Version: 1.0.0
  * Author: Tieku Asare
  * Author URI: https://www.tiekuasare.com
@@ -18,6 +18,7 @@
 if (! defined('ABSPATH')) exit;
 
 // Path Constants
+define('SSVFWW_VERSION', '1.0.0');
 define('SSVFWW_PLUGIN_PATH', plugin_dir_path(__FILE__));
 define('SSVFWW_PLUGIN_URL', plugin_dir_url(__FILE__));
 
