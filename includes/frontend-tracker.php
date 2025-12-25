@@ -14,6 +14,28 @@ function ost_render_frontend_tracker()
         $frontend_asset = include($asset_file);
         wp_enqueue_style('ost-frontend-style', OST_PLUGIN_URL . 'build/frontend.css', array(), $frontend_asset['version']);
         wp_enqueue_style('ost-material-icons', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1', array(), null);
+
+        // 2. LOAD DESIGN SETTINGS AND APPLY
+        $design_settings = get_option('ost_design_settings', [
+            'primary_color' => '#137fec',
+            'font_family' => 'Inter',
+            'use_theme_color' => false
+        ]);
+
+        // Determine primary color
+        $primary_color = '#137fec';
+        if (!empty($design_settings['use_theme_color'])) {
+            // Try detect theme color (simplified - just use default for now)
+            $primary_color = '#137fec'; // Fallback to default
+        } else {
+            $primary_color = $design_settings['primary_color'];
+        }
+
+        $font_family = !empty($design_settings['font_family']) ? $design_settings['font_family'] : 'Inter';
+
+        // Generate CSS variables
+        $custom_css = ".ost-frontend-root { --ost-primary: {$primary_color}; --ost-font-family: '{$font_family}', sans-serif; }";
+        wp_add_inline_style('ost-frontend-style', $custom_css);
     }
 
     $order_id = isset($_POST['ost_order_id']) ? sanitize_text_field($_POST['ost_order_id']) : '';

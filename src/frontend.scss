@@ -61,7 +61,7 @@ $ost-slate-900: #0f172a;
                         padding: 0 16px;
                         transition: all 0.2s ease;
 
-                        &:focus-within { border-color: $ost-primary; background: #fff; box-shadow: 0 0 0 4px rgba($ost-primary, 0.1); }
+                        &:focus-within { border-color: var(--ost-primary); background: #fff; box-shadow: 0 0 0 4px rgba(from var(--ost-primary) r g b / 0.1); }
                         span { color: $ost-slate-400; font-size: 22px; margin-right: 12px; }
                         input { 
                             width: 100%; border: none !important; background: transparent; padding: 14px 0; 
@@ -97,7 +97,15 @@ $ost-slate-900: #0f172a;
     .ost-card-header {
         padding: 32px; border-bottom: 1px solid $ost-slate-100;
         .ost-title-row { display: flex; align-items: center; gap: 15px; h2 { margin: 0; font-weight: 800; } }
-        .ost-badge { background: #eff6ff; color: $ost-primary; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+        .ost-badge { 
+            background: color-mix(in srgb, var(--ost-primary) 10%, white); 
+            color: var(--ost-primary); 
+            padding: 4px 12px; 
+            border-radius: 99px; 
+            font-size: 12px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+        }
         .ost-placed-on { color: $ost-slate-500; margin-top: 8px; font-size: 14px; }
     }
 
@@ -179,7 +187,7 @@ $ost-slate-900: #0f172a;
         }
         
         .ost-progress-fill {
-            background: $ost-primary;
+            background: var(--ost-primary);
             transition: all 1s ease-in-out;
             border-radius: 10px;
             
@@ -258,8 +266,8 @@ $ost-slate-900: #0f172a;
             
             &.completed {
                 .ost-step-circle {
-                    background: $ost-primary !important;
-                    border-color: $ost-primary !important;
+                    background: var(--ost-primary) !important;
+                    border-color: var(--ost-primary) !important;
                     color: #fff !important;
                 }
                 p { color: $ost-slate-900; }
@@ -267,13 +275,13 @@ $ost-slate-900: #0f172a;
             
             &.active {
                 .ost-step-circle {
-                    border-color: $ost-primary !important;
-                    color: $ost-primary !important;
+                    border-color: var(--ost-primary) !important;
+                    color: var(--ost-primary) !important;
                     transform: scale(1.15);
-                    box-shadow: 0 0 0 6px rgba($ost-primary, 0.1);
+                    box-shadow: 0 0 0 6px color-mix(in srgb, var(--ost-primary) 10%, transparent);
                 }
                 p {
-                    color: $ost-primary;
+                    color: var(--ost-primary);
                     font-weight: 900;
                 }
             }
@@ -298,6 +306,6 @@ $ost-slate-900: #0f172a;
 
     .ost-reset-container {
         margin-top: 40px; text-align: center;
-        .ost-btn-reset { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: $ost-slate-500; font-weight: 700; font-size: 14px; transition: color 0.2s; &:hover { color: $ost-primary; } }
+        .ost-btn-reset { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: $ost-slate-500; font-weight: 700; font-size: 14px; transition: color 0.2s; &:hover { color: var(--ost-primary); } }
     }
 }
