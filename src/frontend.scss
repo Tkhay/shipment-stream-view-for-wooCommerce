@@ -1,0 +1,108 @@
+@use "sass:color";
+
+$ost-primary: #137fec;
+$ost-slate-50: #f8fafc;
+$ost-slate-100: #f1f5f9;
+$ost-slate-200: #e2e8f0;
+$ost-slate-400: #94a3b8;
+$ost-slate-500: #64748b;
+$ost-slate-700: #334155;
+$ost-slate-900: #0f172a;
+
+.ost-frontend-root {
+    font-family: 'Inter', sans-serif;
+    max-width: 960px;
+    margin: 40px auto;
+    color: $ost-slate-900;
+
+    // SEARCH SECTION
+    .ost-search-card {
+        background: #fff; padding: 32px; border-radius: 16px; border: 1px solid $ost-slate-200;
+        .ost-form {
+            display: flex; flex-direction: column; gap: 24px;
+            .ost-input-flex {
+                display: flex; flex-direction: column; gap: 20px;
+                @media (min-width: 768px) { flex-direction: row; }
+            }
+            .ost-input-group {
+                flex: 1; label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+                .ost-input-wrapper {
+                    display: flex; align-items: center; background: $ost-slate-50; border: 1px solid $ost-slate-200; border-radius: 8px; padding: 0 12px;
+                    input { flex: 1; background: transparent; border: none !important; padding: 12px 0; outline: none !important; box-shadow: none !important; }
+                    span { color: $ost-slate-400; font-size: 20px; margin-right: 10px; }
+                }
+            }
+        }
+    }
+
+    .ost-btn-track {
+        align-self: flex-start; height: 48px; padding: 0 28px; background: $ost-primary !important;
+        color: #fff !important; border: none; border-radius: 8px; font-weight: 800; cursor: pointer;
+        display: flex; align-items: center; gap: 10px;
+    }
+
+    // STEPPER CONTAINER
+    .ost-stepper-container {
+        padding: 40px 20px; position: relative; background: $ost-slate-50;
+        @media (min-width: 768px) { padding: 60px 40px; }
+
+        .ost-progress-line {
+            position: absolute; background: $ost-slate-200; z-index: 1; border-radius: 10px;
+            left: 38px; top: 40px; bottom: 40px; width: 4px; height: auto;
+
+            @media (min-width: 768px) {
+                top: 77px; left: 80px; right: 80px; bottom: auto; height: 6px; width: auto;
+            }
+        }
+        
+        .ost-progress-fill { 
+            background: $ost-primary;
+            transition: all 1s ease-in-out;
+            border-radius: 10px;
+            
+            width: 100%;
+            height: var(--progress, 0%);
+
+            @media (min-width: 768px) {
+                height: 100%;
+                width: var(--progress, 0%);
+            }
+        }
+
+        .ost-steps {
+            display: flex; flex-direction: column; gap: 40px; position: relative; z-index: 2;
+            @media (min-width: 768px) { flex-direction: row; justify-content: space-between; gap: 0; }
+        }
+        
+        .ost-step {
+            display: flex; align-items: center; gap: 20px;
+            @media (min-width: 768px) { flex-direction: column; text-align: center; width: 120px; gap: 12px; }
+
+            .ost-step-circle {
+                width: 40px; height: 40px; flex-shrink: 0; background: #fff; border: 4px solid $ost-slate-200;
+                border-radius: 50%; display: flex; align-items: center; justify-content: center;
+                color: $ost-slate-400; transition: all 0.3s;
+            }
+            p { font-size: 13px; font-weight: 700; color: $ost-slate-400; margin: 0; }
+
+            &.completed {
+                .ost-step-circle { background: $ost-primary !important; border-color: $ost-primary !important; color: #fff !important; }
+                p { color: $ost-slate-900; }
+            }
+            &.active {
+                .ost-step-circle { border-color: $ost-primary !important; color: $ost-primary !important; transform: scale(1.15); box-shadow: 0 0 0 6px rgba($ost-primary, 0.1); }
+                p { color: $ost-primary; font-weight: 900; }
+            }
+        }
+    }
+
+    // RESET BUTTON
+    .ost-reset-container {
+        margin-top: 32px; padding-top: 24px; border-top: 1px dashed $ost-slate-200; text-align: center;
+        .ost-btn-reset {
+            display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: $ost-slate-500;
+            font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 8px;
+            &:hover { color: $ost-primary; background: rgba($ost-primary, 0.05); }
+        }
+    }
+}

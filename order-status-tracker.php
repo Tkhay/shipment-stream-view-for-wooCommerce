@@ -7,10 +7,23 @@
  * Author: Tieku Asare
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
+
+require_once plugin_dir_path(__FILE__) . 'includes/frontend-tracker.php';
+
+add_shortcode('order_tracker', 'ost_render_frontend_tracker');
 
 add_action('admin_menu', function () {
-    add_menu_page('Order Tracker', 'Order Tracker', 'manage_options', 'order-tracker-plugin', 'ost_render_admin_app', 'dashicons-location-alt', 6);
+    add_menu_page(
+        'Order Tracker',
+        'Order Tracker',
+        'manage_options',
+        'order-tracker-plugin',
+        'ost_render_admin_app',
+        'dashicons-location-alt',
+        6
+    );
 });
 
 function ost_render_admin_app()
@@ -34,12 +47,21 @@ add_action('admin_enqueue_scripts', function ($hook) {
     $saved_order = get_option('ost_tracking_steps', []);
 
     // ONE LOCALIZATION CALL ONLY
-    wp_localize_script('ost-script', 'ostData', array(
-        'allStatuses' => $formatted_statuses,
-        'savedOrder'  => $saved_order
-    ));
+    wp_localize_script(
+        'ost-script',
+        'ostData',
+        array(
+            'allStatuses' => $formatted_statuses,
+            'savedOrder'  => $saved_order
+        )
+    );
 
-    wp_enqueue_style('ost-style', plugins_url('build/style-index.css', __FILE__), array(), $asset_file['version']);
+    wp_enqueue_style(
+        'ost-style',
+        plugins_url('build/style-index.css', __FILE__),
+        array(),
+        $asset_file['version']
+    );
 });
 
 add_action('rest_api_init', function () {

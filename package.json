@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "wp-scripts start",
-    "build": "wp-scripts build"
+    "start": "wp-scripts start src/index.js src/frontend.js",
+    "build": "wp-scripts build src/index.js src/frontend.js"
   },
   "keywords": [],
   "author": "",
