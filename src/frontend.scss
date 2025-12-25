@@ -1,68 +1,68 @@
 @use "sass:color";
 
 // --- THEME VARIABLES ---
-$ost-primary: #137fec;
-$ost-slate-50: #f8fafc;
-$ost-slate-100: #f1f5f9;
-$ost-slate-200: #e2e8f0;
-$ost-slate-400: #94a3b8;
-$ost-slate-500: #64748b;
-$ost-slate-700: #334155;
-$ost-slate-900: #0f172a;
+$ssvfww-primary: #137fec;
+$ssvfww-slate-50: #f8fafc;
+$ssvfww-slate-100: #f1f5f9;
+$ssvfww-slate-200: #e2e8f0;
+$ssvfww-slate-400: #94a3b8;
+$ssvfww-slate-500: #64748b;
+$ssvfww-slate-700: #334155;
+$ssvfww-slate-900: #0f172a;
 
-.ost-frontend-root {
+.ssvfww-frontend-root {
     font-family: 'Inter', sans-serif;
     max-width: 960px;
     margin: 40px auto;
-    color: $ost-slate-900;
+    color: $ssvfww-slate-900;
 
     // --- SEARCH & ERROR SECTION ---
-    .ost-search-section {
+    .ssvfww-search-section {
         text-align: center;
         margin-bottom: 48px;
 
-        .ost-search-header {
+        .ssvfww-search-header {
             margin-bottom: 32px;
             h1 { font-size: 42px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
-            p { color: $ost-slate-500; font-size: 18px; }
+            p { color: $ssvfww-slate-500; font-size: 18px; }
         }
 
-        .ost-search-card {
+        .ssvfww-search-card {
             background: #fff;
             padding: 40px;
             border-radius: 20px;
-            border: 1px solid $ost-slate-200;
+            border: 1px solid $ssvfww-slate-200;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             max-width: 700px;
             margin: 0 auto;
 
-            .ost-form {
+            .ssvfww-form {
                 display: flex;
                 flex-direction: column;
                 gap: 28px;
 
-                .ost-input-flex {
+                .ssvfww-input-flex {
                     display: flex;
                     gap: 20px;
                     @media (max-width: 768px) { flex-direction: column; }
                 }
 
-                .ost-input-group {
+                .ssvfww-input-group {
                     flex: 1;
                     text-align: left;
-                    label { display: block; font-size: 13px; font-weight: 800; text-transform: uppercase; color: $ost-slate-500; margin-bottom: 10px; }
+                    label { display: block; font-size: 13px; font-weight: 800; text-transform: uppercase; color: $ssvfww-slate-500; margin-bottom: 10px; }
                     
-                    .ost-input-wrapper {
+                    .ssvfww-input-wrapper {
                         display: flex;
                         align-items: center;
                         background: #f8fafc;
-                        border: 2px solid $ost-slate-200;
+                        border: 2px solid $ssvfww-slate-200;
                         border-radius: 12px;
                         padding: 0 16px;
                         transition: all 0.2s ease;
 
-                        &:focus-within { border-color: var(--ost-primary); background: #fff; box-shadow: 0 0 0 4px rgba(from var(--ost-primary) r g b / 0.1); }
-                        span { color: $ost-slate-400; font-size: 22px; margin-right: 12px; }
+                        &:focus-within { border-color: var(--ssvfww-primary); background: #fff; box-shadow: 0 0 0 4px rgba(from var(--ssvfww-primary) r g b / 0.1); }
+                        span { color: $ssvfww-slate-400; font-size: 22px; margin-right: 12px; }
                         input { 
                             width: 100%; border: none !important; background: transparent; padding: 14px 0; 
                             font-size: 16px; font-weight: 600; outline: none !important; box-shadow: none !important;
@@ -71,18 +71,18 @@ $ost-slate-900: #0f172a;
                 }
             }
 
-            .ost-btn-track {
-                width: 100%; height: 56px; background: $ost-primary !important; color: #fff !important;
+            .ssvfww-btn-track {
+                width: 100%; height: 56px; background: $ssvfww-primary !important; color: #fff !important;
                 border: none; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer;
                 display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px;
                 transition: transform 0.2s;
-                &:hover { background: color.adjust($ost-primary, $lightness: -5%) !important; transform: translateY(-1px); }
+                &:hover { background: color.adjust($ssvfww-primary, $lightness: -5%) !important; transform: translateY(-1px); }
             }
         }
     }
 
     // --- ERROR MESSAGE ---
-    .ost-error {
+    .ssvfww-error {
         margin-top: 24px; padding: 16px 20px; background: #fef2f2; border: 1px solid #fee2e2;
         border-radius: 12px; color: #b91c1c; font-size: 14px; font-weight: 700;
         display: flex; align-items: center; gap: 10px;
@@ -90,36 +90,36 @@ $ost-slate-900: #0f172a;
     }
 
     // --- RESULT CARD ---
-    .ost-result-card {
-        background: #fff; border-radius: 16px; border: 1px solid $ost-slate-200; overflow: hidden;
+    .ssvfww-result-card {
+        background: #fff; border-radius: 16px; border: 1px solid $ssvfww-slate-200; overflow: hidden;
     }
 
-    .ost-card-header {
-        padding: 32px; border-bottom: 1px solid $ost-slate-100;
-        .ost-title-row { display: flex; align-items: center; gap: 15px; h2 { margin: 0; font-weight: 800; } }
-        .ost-badge { 
-            background: color-mix(in srgb, var(--ost-primary) 10%, white); 
-            color: var(--ost-primary); 
+    .ssvfww-card-header {
+        padding: 32px; border-bottom: 1px solid $ssvfww-slate-100;
+        .ssvfww-title-row { display: flex; align-items: center; gap: 15px; h2 { margin: 0; font-weight: 800; } }
+        .ssvfww-badge { 
+            background: color-mix(in srgb, var(--ssvfww-primary) 10%, white); 
+            color: var(--ssvfww-primary); 
             padding: 4px 12px; 
             border-radius: 99px; 
             font-size: 12px; 
             font-weight: 800; 
             text-transform: uppercase; 
         }
-        .ost-placed-on { color: $ost-slate-500; margin-top: 8px; font-size: 14px; }
+        .ssvfww-placed-on { color: $ssvfww-slate-500; margin-top: 8px; font-size: 14px; }
     }
 
     // --- EXCEPTION ALERT ---
-    .ost-exception-alert {
+    .ssvfww-exception-alert {
         display: flex; align-items: center; gap: 16px; margin: 24px; padding: 20px; border-radius: 12px; 
         border-left: 6px solid #f59e0b; background: #fffbeb; color: #92400e;
         .material-symbols-outlined { font-size: 32px; color: #f59e0b; }
-        .ost-alert-content { strong { display: block; font-size: 16px; margin-bottom: 4px; } p { margin: 0; font-size: 14px; opacity: 0.9; } }
+        .ssvfww-alert-content { strong { display: block; font-size: 16px; margin-bottom: 4px; } p { margin: 0; font-size: 14px; opacity: 0.9; } }
     }
 
-    .ost-dimmed { opacity: 0.4; filter: grayscale(1); pointer-events: none; }
+    .ssvfww-dimmed { opacity: 0.4; filter: grayscale(1); pointer-events: none; }
 
-    .ost-details-grid {
+    .ssvfww-details-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 32px;
@@ -131,7 +131,7 @@ $ost-slate-900: #0f172a;
         grid-template-columns: 1fr;
     }
 
-    .ost-detail-box {
+    .ssvfww-detail-box {
         h4 {
             display: flex;
             align-items: center;
@@ -139,7 +139,7 @@ $ost-slate-900: #0f172a;
             font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
-            color: $ost-slate-500;
+            color: $ssvfww-slate-500;
             margin-bottom: 16px;
             .material-symbols-outlined { font-size: 18px; }
         }
@@ -147,13 +147,13 @@ $ost-slate-900: #0f172a;
             font-size: 15px;
             line-height: 1.6;
             margin: 0;
-            color: $ost-slate-900;
+            color: $ssvfww-slate-900;
         }
     }
 }
 
     // --- STEPPER (RESPONSIVE) ---
-    .ost-stepper-container {
+    .ssvfww-stepper-container {
         padding: 40px 20px;
         position: relative;
         background: #f8fafc;
@@ -162,9 +162,9 @@ $ost-slate-900: #0f172a;
             padding: 60px 40px;
         }
 
-        .ost-progress-line {
+        .ssvfww-progress-line {
             position: absolute;
-            background: $ost-slate-200;
+            background: $ssvfww-slate-200;
             border-radius: 10px;
             z-index: 1;
             
@@ -186,8 +186,8 @@ $ost-slate-900: #0f172a;
             }
         }
         
-        .ost-progress-fill {
-            background: var(--ost-primary);
+        .ssvfww-progress-fill {
+            background: var(--ssvfww-primary);
             transition: all 1s ease-in-out;
             border-radius: 10px;
             
@@ -202,7 +202,7 @@ $ost-slate-900: #0f172a;
             }
         }
 
-        .ost-steps {
+        .ssvfww-steps {
             display: flex;
             position: relative;
             z-index: 2;
@@ -219,7 +219,7 @@ $ost-slate-900: #0f172a;
             }
         }
         
-        .ost-step {
+        .ssvfww-step {
             display: flex;
             align-items: center;
             
@@ -235,12 +235,12 @@ $ost-slate-900: #0f172a;
                 gap: 12px;
             }
             
-            .ost-step-circle {
+            .ssvfww-step-circle {
                 width: 40px;
                 height: 40px;
                 flex-shrink: 0;
                 background: #fff;
-                border: 4px solid $ost-slate-200;
+                border: 4px solid $ssvfww-slate-200;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -265,23 +265,23 @@ $ost-slate-900: #0f172a;
             }
             
             &.completed {
-                .ost-step-circle {
-                    background: var(--ost-primary) !important;
-                    border-color: var(--ost-primary) !important;
+                .ssvfww-step-circle {
+                    background: var(--ssvfww-primary) !important;
+                    border-color: var(--ssvfww-primary) !important;
                     color: #fff !important;
                 }
-                p { color: $ost-slate-900; }
+                p { color: $ssvfww-slate-900; }
             }
             
             &.active {
-                .ost-step-circle {
-                    border-color: var(--ost-primary) !important;
-                    color: var(--ost-primary) !important;
+                .ssvfww-step-circle {
+                    border-color: var(--ssvfww-primary) !important;
+                    color: var(--ssvfww-primary) !important;
                     transform: scale(1.15);
-                    box-shadow: 0 0 0 6px color-mix(in srgb, var(--ost-primary) 10%, transparent);
+                    box-shadow: 0 0 0 6px color-mix(in srgb, var(--ssvfww-primary) 10%, transparent);
                 }
                 p {
-                    color: var(--ost-primary);
+                    color: var(--ssvfww-primary);
                     font-weight: 900;
                 }
             }
@@ -289,23 +289,23 @@ $ost-slate-900: #0f172a;
     }
 
     // --- PRODUCT ITEMS ---
-    .ost-items-section {
+    .ssvfww-items-section {
         padding: 32px;
         h3 { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; margin-bottom: 24px; }
     }
 
-    .ost-product-row {
+    .ssvfww-product-row {
         display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #f1f5f9;
-        .ost-product-img { width: 80px; height: 80px; border-radius: 12px; overflow: hidden; border: 1px solid #f1f5f9; flex-shrink: 0; img { width: 100%; height: 100%; object-fit: cover; } }
-        .ost-product-info { flex: 1; display: flex; justify-content: space-between; align-items: center; }
-        .ost-product-details { display: flex; flex-direction: column; gap: 4px; strong { font-size: 16px; color: $ost-slate-900; } .ost-product-meta { color: $ost-slate-500; font-size: 14px; } .ost-product-qty { color: $ost-slate-700; font-size: 14px; font-weight: 600; } }
-        .ost-product-price { font-weight: 800; font-size: 18px; color: $ost-slate-900; }
+        .ssvfww-product-img { width: 80px; height: 80px; border-radius: 12px; overflow: hidden; border: 1px solid #f1f5f9; flex-shrink: 0; img { width: 100%; height: 100%; object-fit: cover; } }
+        .ssvfww-product-info { flex: 1; display: flex; justify-content: space-between; align-items: center; }
+        .ssvfww-product-details { display: flex; flex-direction: column; gap: 4px; strong { font-size: 16px; color: $ssvfww-slate-900; } .ssvfww-product-meta { color: $ssvfww-slate-500; font-size: 14px; } .ssvfww-product-qty { color: $ssvfww-slate-700; font-size: 14px; font-weight: 600; } }
+        .ssvfww-product-price { font-weight: 800; font-size: 18px; color: $ssvfww-slate-900; }
     }
 
-    .ost-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; margin-top: 12px; span { color: $ost-slate-500; font-size: 18px; font-weight: 600; } strong { font-size: 28px; font-weight: 900; color: $ost-slate-900; } }
+    .ssvfww-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; margin-top: 12px; span { color: $ssvfww-slate-500; font-size: 18px; font-weight: 600; } strong { font-size: 28px; font-weight: 900; color: $ssvfww-slate-900; } }
 
-    .ost-reset-container {
+    .ssvfww-reset-container {
         margin-top: 40px; text-align: center;
-        .ost-btn-reset { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: $ost-slate-500; font-weight: 700; font-size: 14px; transition: color 0.2s; &:hover { color: var(--ost-primary); } }
+        .ssvfww-btn-reset { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: $ssvfww-slate-500; font-weight: 700; font-size: 14px; transition: color 0.2s; &:hover { color: var(--ssvfww-primary); } }
     }
 }

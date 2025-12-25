@@ -23,7 +23,7 @@ const OrderTrackerBuilder = () => {
 
     const saveSettings = () => {
         apiFetch({
-            path: '/ost/v1/save-settings',
+            path: '/ssvfww/v1/save-settings',
             method: 'POST',
             data: { steps: steps },
         }).then(() => alert('SETTINGS SAVED SUCCESSFULLY!'));
@@ -34,7 +34,7 @@ const OrderTrackerBuilder = () => {
         if (window.confirm('RESET TO WOOCOMMERCE ORDER STATUS DEFAULTS (WITH EXCEPTION TYPES)?')) {
             setSteps(defaultSteps);
             setDeletedSteps([]);
-            apiFetch({ path: '/ost/v1/save-settings', method: 'POST', data: { steps: defaultSteps } });
+            apiFetch({ path: '/ssvfww/v1/save-settings', method: 'POST', data: { steps: defaultSteps } });
         }
     };
 
