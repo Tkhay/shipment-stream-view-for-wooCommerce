@@ -1,9 +1,9 @@
-.ost-settings-container {
+.ssvfww-settings-container {
     max-width: 800px;
     margin: 40px 0;
 }
 
-.ost-settings-card {
+.ssvfww-settings-card {
     background: #fff;
     border: 1px solid #ccd0d4;
     border-radius: 4px;
@@ -23,7 +23,7 @@
     }
 }
 
-.ost-setting-group {
+.ssvfww-setting-group {
     margin-bottom: 32px;
     padding-bottom: 32px;
     border-bottom: 1px solid #dcdcde;
@@ -45,8 +45,8 @@
     }
 }
 
-.ost-color-controls {
-    .ost-checkbox-label {
+.ssvfww-color-controls {
+    .ssvfww-checkbox-label {
         display: flex;
         align-items: center;
         gap: 8px;
@@ -62,12 +62,12 @@
     }
 }
 
-.ost-color-picker-wrap {
+.ssvfww-color-picker-wrap {
     display: flex;
     align-items: center;
     gap: 12px;
 
-    .ost-color-picker {
+    .ssvfww-color-picker {
         width: 60px;
         height: 40px;
         border: 1px solid #8c8f94;
@@ -75,7 +75,7 @@
         cursor: pointer;
     }
 
-    .ost-color-input {
+    .ssvfww-color-input {
         width: 120px;
         padding: 6px 12px;
         border: 1px solid #8c8f94;
@@ -85,7 +85,7 @@
     }
 }
 
-.ost-font-select {
+.ssvfww-font-select {
     width: 100%;
     max-width: 300px;
     padding: 8px 12px;
@@ -95,7 +95,7 @@
     background: #fff;
 }
 
-.ost-preview-section {
+.ssvfww-preview-section {
     background: #f6f7f7;
     padding: 24px;
     border-radius: 4px;
@@ -109,14 +109,14 @@
     }
 }
 
-.ost-preview-box {
+.ssvfww-preview-box {
     background: #fff;
     padding: 24px;
     border-radius: 8px;
     border: 1px solid #dcdcde;
 }
 
-.ost-settings-actions {
+.ssvfww-settings-actions {
     display: flex;
     gap: 12px;
     justify-content: flex-end;

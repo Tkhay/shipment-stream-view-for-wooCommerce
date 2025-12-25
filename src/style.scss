@@ -8,14 +8,14 @@ $slate-400: #94a3b8;
 $slate-500: #64748b;
 $slate-900: #0f172a;
 
-.ost-builder-container {
+.ssvfww-builder-container {
     font-family: 'Inter', sans-serif;
     max-width: 1024px;
     margin: 40px auto;
     background: $bg-light;
     padding: 40px;
 
-    .ost-header {
+    .ssvfww-header {
         margin-bottom: 32px;
         h1 { font-size: 36px; 
             font-weight: 900; 
@@ -34,14 +34,14 @@ $slate-900: #0f172a;
     }
 
     /* Main Table Container */
-    .ost-status-table {
+    .ssvfww-status-table {
         background: #ffffff;
         border-radius: 12px;
         border: 1px solid $slate-200;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         overflow: hidden;
 
-        .ost-table-header {
+        .ssvfww-table-header {
             display: grid;
             grid-template-columns: 80px 1fr 120px;
             padding: 12px 24px;
@@ -56,7 +56,7 @@ $slate-900: #0f172a;
     }
 
     /* Row Styling */
-    .ost-list-item.compact-row {
+    .ssvfww-list-item.compact-row {
         display: grid;
         grid-template-columns: 80px 1fr 120px;
         align-items: center;
@@ -111,7 +111,7 @@ $slate-900: #0f172a;
     }
 
     /* Sticky Footer Area */
-    .ost-footer-sticky {
+    .ssvfww-footer-sticky {
         margin-top: 32px;
         padding: 16px 24px;
         background: #ffffff;

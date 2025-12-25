@@ -4,8 +4,8 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import apiFetch from '@wordpress/api-fetch';
 
 const OrderTrackerBuilder = () => {
-    const allWooStatuses = window.ostData?.allStatuses || [];
-    const savedOrder = window.ostData?.savedOrder || [];
+    const allWooStatuses = window.ssvfwwData?.allStatuses || [];
+    const savedOrder = window.ssvfwwData?.savedOrder || [];
 
     // Initialize Active Steps
     const [steps, setSteps] = useState(savedOrder.length > 0 ? savedOrder : allWooStatuses);
@@ -30,7 +30,7 @@ const OrderTrackerBuilder = () => {
     };
 
     const resetToDefaults = () => {
-        const defaultSteps = window.ostData?.defaultSteps || allWooStatuses;
+        const defaultSteps = window.ssvfwwData?.defaultSteps || allWooStatuses;
         if (window.confirm('RESET TO WOOCOMMERCE ORDER STATUS DEFAULTS (WITH EXCEPTION TYPES)?')) {
             setSteps(defaultSteps);
             setDeletedSteps([]);
@@ -65,15 +65,15 @@ const OrderTrackerBuilder = () => {
     };
 
     return (
-        <div className="ost-builder-container">
-            <div className="ost-header">
-                <h1>Order Status Management</h1>
+        <div className="ssvfww-builder-container">
+            <div className="ssvfww-header">
+                <h1>Shipment Stream View for WooCommerce - Status Management</h1>
                 <p>Rearrange the tracking steps by dragging them into the order you prefer.</p>
                 <p>Choose <strong>Milestone</strong> for normal delivery stages (shown on the progress bar), or <strong>Exception</strong> for special cases (shown as alert cards).</p>
             </div>
 
-            <div className="ost-status-table">
-                <div className="ost-table-header">
+            <div className="ssvfww-status-table">
+                <div className="ssvfww-table-header">
                     <div style={{textAlign: 'center'}}>Order</div>
                     <div>Status Name & Type</div>
                     <div style={{textAlign: 'right'}}>Actions</div>
@@ -82,11 +82,11 @@ const OrderTrackerBuilder = () => {
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="steps">
                         {(provided) => (
-                            <ul className="ost-step-list" {...provided.droppableProps} ref={provided.innerRef}>
+                            <ul className="ssvfww-step-list" {...provided.droppableProps} ref={provided.innerRef}>
                                 {steps.map((step, index) => (
                                     <Draggable key={step.id} draggableId={step.id} index={index}>
                                         {(provided) => (
-                                            <li className="ost-list-item compact-row" ref={provided.innerRef} {...provided.draggableProps}>
+                                            <li className="ssvfww-list-item compact-row" ref={provided.innerRef} {...provided.draggableProps}>
                                                 <div className="col-drag" {...provided.dragHandleProps}>
                                                     <span className="dashicons dashicons-menu"></span>
                                                 </div>
@@ -108,7 +108,7 @@ const OrderTrackerBuilder = () => {
                                                                 
                                                                 {/*TYPE Selector*/}
                                                                 <select 
-                                                                    className="ost-type-select"
+                                                                    className="ssvfww-type-select"
                                                                     value={step.type || 'milestone'} 
                                                                     onChange={(e) => updateStepProperty(step.id, 'type', e.target.value)}
                                                                     style={{ marginTop: '8px', fontSize: '11px', display: 'block' }}
@@ -139,7 +139,7 @@ const OrderTrackerBuilder = () => {
                 </DragDropContext>
             </div>
 
-            <div className="ost-footer-sticky">
+            <div className="ssvfww-footer-sticky">
                 <div className="footer-btns">
                     <button onClick={resetToDefaults} className="btn-reset">RESET TO DEFAULTS</button>
                     <button onClick={saveSettings} className="btn-save">SAVE CHANGES</button>
@@ -148,11 +148,11 @@ const OrderTrackerBuilder = () => {
 
             {/* RESTORED YOUR DELETED SECTION */}
             {deletedSteps.length > 0 && (
-                <div className="ost-deleted-section">
+                <div className="ssvfww-deleted-section">
                     <h2 style={{marginTop: '60px', fontSize: '24px', fontWeight: '800'}}>Removed Statuses</h2>
-                    <div className="ost-status-table">
+                    <div className="ssvfww-status-table">
                         {deletedSteps.map(step => (
-                            <div key={step.id} className="ost-list-item compact-row" style={{gridTemplateColumns: '1fr 120px'}}>
+                            <div key={step.id} className="ssvfww-list-item compact-row" style={{gridTemplateColumns: '1fr 120px'}}>
                                 <div className="col-content">
                                     <div className="status-dot" style={{background: '#e2e8f0'}}></div>
                                     <div className="flex-text">
@@ -172,4 +172,4 @@ const OrderTrackerBuilder = () => {
     );
 };
 
-render(<OrderTrackerBuilder />, document.getElementById('ost-admin-app'));
+render(<OrderTrackerBuilder />, document.getElementById('ssvfww-admin-app'));

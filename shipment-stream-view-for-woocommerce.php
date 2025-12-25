@@ -18,8 +18,8 @@
 if (!defined('ABSPATH')) exit;
 
 // Path Constants
-define('OST_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('OST_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('SSVFWW_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('SSVFWW_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Declare HPOS compatibility for WooCommerce.
 add_action('before_woocommerce_init', function () {
@@ -32,10 +32,10 @@ add_action('before_woocommerce_init', function () {
 add_action('plugins_loaded', function () {
     if (class_exists('WooCommerce')) {
         // Load Modules
-        require_once OST_PLUGIN_PATH . 'includes/admin-settings.php';
-        require_once OST_PLUGIN_PATH . 'includes/frontend-tracker.php';
+        require_once SSVFWW_PLUGIN_PATH . 'includes/admin-settings.php';
+        require_once SSVFWW_PLUGIN_PATH . 'includes/frontend-tracker.php';
 
-        add_shortcode('order_tracker', 'ost_render_frontend_tracker');
+        add_shortcode('order_tracker', 'ssvfww_render_frontend_tracker');
     } else {
         // Show admin notice if WooCommerce is missing
         add_action('admin_notices', function () {
@@ -48,11 +48,11 @@ add_action('plugins_loaded', function () {
     }
 });
 
-register_activation_hook(__FILE__, 'ost_set_default_tracking_logic');
+register_activation_hook(__FILE__, 'ssvfww_set_default_tracking_logic');
 
-function ost_set_default_tracking_logic()
+function ssvfww_set_default_tracking_logic()
 {
-    $existing = get_option('ost_tracking_steps');
+    $existing = get_option('ssvfww_tracking_steps');
 
     if (!$existing) {
 
@@ -63,7 +63,7 @@ function ost_set_default_tracking_logic()
             ['id' => 'completed',  'label' => 'Delivered',      'type' => 'milestone'],
             ['id' => 'cancelled',  'label' => 'Order Cancelled', 'type' => 'exception']
         ];
-        update_option('ost_tracking_steps', $default_steps);
+        update_option('ssvfww_tracking_steps', $default_steps);
     } else {
         $needs_update = false;
         foreach ($existing as &$step) {
@@ -73,7 +73,7 @@ function ost_set_default_tracking_logic()
             }
         }
         if ($needs_update) {
-            update_option('ost_tracking_steps', $existing);
+            update_option('ssvfww_tracking_steps', $existing);
         }
     }
 }
