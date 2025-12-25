@@ -35,7 +35,7 @@ add_action('plugins_loaded', function () {
         require_once SSVFWW_PLUGIN_PATH . 'includes/admin-settings.php';
         require_once SSVFWW_PLUGIN_PATH . 'includes/frontend-tracker.php';
 
-        add_shortcode('order_tracker', 'ssvfww_render_frontend_tracker');
+        add_shortcode('ssvfw_order_tracker', 'ssvfww_render_frontend_tracker');
     } else {
         // Show admin notice if WooCommerce is missing
         add_action('admin_notices', function () {
