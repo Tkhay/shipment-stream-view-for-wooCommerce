@@ -126,6 +126,18 @@ Yes! The tracking interface is fully responsive and works beautifully on all dev
 * HPOS compatibility
 * Customizable design settings
 
+== Development ==
+
+This plugin uses modern JavaScript tools (npm, webpack) for development.
+The full source code is available in our public GitHub repository: [Link](https://github.com/Tkhay/shipment-stream-view-for-wooCommerce)
+
+To build from source:
+
+1. Clone the repository
+2. Run `npm install` to install dependencies
+3. Run `npm run build` to compile assets
+4. Run `npm run start` for development mode
+
 == Additional Info ==
 
 **Support:** Email: [dev@tiekuasare.com](mailto:dev@tiekuasare.com)

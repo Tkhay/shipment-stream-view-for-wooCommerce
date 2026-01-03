@@ -13,6 +13,7 @@
  * Requires at least: 6.9
  * WC requires at least: 8.0
  * WC tested up to: 10.0
+ * Requires Plugins: woocommerce
  */
 
 if (! defined('ABSPATH')) exit;
