@@ -22,6 +22,14 @@ const OrderTrackerBuilder = () => {
 	const [editingId, setEditingId] = useState( null );
 	const [isSaving, setIsSaving] = useState( false );
 	const [saveMessage, setSaveMessage] = useState( '' );
+	const [copyMessage, setCopyMessage] = useState( '' );
+
+	const copyToClipboard = ( text ) => {
+		navigator.clipboard.writeText( text ).then( () => {
+			setCopyMessage( 'Copied!' );
+			setTimeout( () => setCopyMessage( '' ), 2000 );
+		} );
+	};
 
 	const saveSettings = () => {
 		setIsSaving( true );
@@ -113,6 +121,7 @@ const OrderTrackerBuilder = () => {
 				<h1>Shipment Stream View for WooCommerce - Status Management</h1>
 				<p>Rearrange the tracking steps by dragging them into the order you prefer.</p>
 				<p>Choose <strong>Milestone</strong> for normal delivery stages (shown on the progress bar), or <strong>Exception</strong> for special cases (shown as alert cards).</p>
+				<p>To display the tracker, add the shortcode <code onClick={() => copyToClipboard( '[ssvfww_order_tracker]' )} style={{ cursor: 'pointer', title: 'Click to copy' }}>[ssvfww_order_tracker]</code> {copyMessage && <span style={{ color: '#46b450', marginLeft: '10px', fontWeight: 'bold' }}>{copyMessage}</span>} to any page.</p>
 			</div>
 
 			<div className='ssvfww-status-table'>

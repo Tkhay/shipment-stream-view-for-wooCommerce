@@ -44,7 +44,9 @@ function ssvfww_render_frontend_tracker()
         $font_family = ! empty($design_settings['font_family']) ? $design_settings['font_family'] : 'Inter';
 
         // Generate CSS variables
-        $custom_css = ".ssvfww-frontend-root { --ssvfww-primary: {$primary_color}; --ssvfww-font-family: '{$font_family}', sans-serif; }";
+        $primary_color_esc = esc_attr($primary_color);
+        $font_family_esc = esc_attr($font_family);
+        $custom_css = ".ssvfww-frontend-root { --ssvfww-primary: {$primary_color_esc}; --ssvfww-font-family: '{$font_family_esc}', sans-serif; }";
         wp_add_inline_style('ssvfww-frontend-style', $custom_css);
     }
 

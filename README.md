@@ -34,7 +34,7 @@ A modern, visual order tracking system for WooCommerce that displays order statu
 2. Upload to WordPress via **Plugins → Add New → Upload Plugin**
 3. Activate the plugin
 4. Go to **Shipment Stream** to configure tracking steps
-5. Add `[ssvfw_order_tracker]` shortcode to any page
+5. Add `[ssvfww_order_tracker]` shortcode to any page
 
 ### For Developers
 
@@ -66,7 +66,7 @@ npm run start
    - Set type: **Milestone** (progress bar) or **Exception** (alert)
 3. Add the shortcode to a page:
    ```
-   [ssvfw_order_tracker]
+   [ssvfww_order_tracker]
    ```
 
 ### Customization

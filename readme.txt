@@ -20,7 +20,7 @@ A modern, visual order tracking system for WooCommerce that displays order statu
 * **Visual Progress Tracking** - Beautiful progress bar showing order journey
 * **Customizable Status Steps** - Drag and drop to reorder your tracking milestones
 * **Exception Handling** - Special alerts for order issues (on-hold, cancelled, etc.)
-* **Easy Integration** - Simple shortcode `[ssvfw_order_tracker]` to add to any page
+* **Easy Integration** - Simple shortcode `[ssvfww_order_tracker]` to add to any page
 * **Responsive Design** - Perfect on desktop, tablet, and mobile devices
 * **WooCommerce Compatible** - Works seamlessly with your existing WooCommerce setup
 * **HPOS Ready** - Full support for High-Performance Order Storage
@@ -32,7 +32,7 @@ A modern, visual order tracking system for WooCommerce that displays order statu
 1. Install and activate the plugin
 2. Go to **Shipment Stream** in your WordPress admin
 3. Customize your tracking steps (drag to reorder, edit labels, set types)
-4. Add the `[ssvfw_order_tracker]` shortcode to any page
+4. Add the `[ssvfww_order_tracker]` shortcode to any page
 5. Customers enter their order ID and email to track their order
 
 = Perfect For =
@@ -68,14 +68,14 @@ Unlike other tracking plugins, Shipment Stream View gives you complete control o
 1. Go to **Shipment Stream** in your WordPress admin menu
 2. Configure your tracking steps (milestones and exceptions)
 3. Optionally customize design colors in **Settings**
-4. Create a new page and add the shortcode: `[ssvfw_order_tracker]`
+4. Create a new page and add the shortcode: `[ssvfww_order_tracker]`
 5. That's it! Your customers can now track their orders
 
 == Frequently Asked Questions ==
 
 = How do I add the order tracker to my site? =
 
-Simply add the shortcode `[ssvfw_order_tracker]` to any page or post where you want the tracking form to appear.
+Simply add the shortcode `[ssvfww_order_tracker]` to any page or post where you want the tracking form to appear.
 
 = Can I customize the tracking steps? =
 
