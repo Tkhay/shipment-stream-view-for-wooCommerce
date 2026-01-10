@@ -126,7 +126,7 @@ add_action('rest_api_init', function () {
                 update_option('ssvfww_tracking_steps', $params['steps']);
                 return new WP_REST_Response(array('success' => true), 200);
             },
-            'permission_callback' => fn() => current_user_can('manage_options')
+            'permission_callback' => fn(\WP_REST_Request $request) => current_user_can('manage_options')
         )
     );
 
@@ -141,7 +141,7 @@ add_action('rest_api_init', function () {
                 update_option('ssvfww_design_settings', $params);
                 return new WP_REST_Response(array('success' => true), 200);
             },
-            'permission_callback' => fn() => current_user_can('manage_options')
+            'permission_callback' => fn(\WP_REST_Request $request) => current_user_can('manage_options')
         )
     );
 });
